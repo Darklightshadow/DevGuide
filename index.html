@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevGuide - Votre Guide de la Programmation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 22px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #667eea;
+            text-align: center;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .card:hover::before {
+            opacity: 0.1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .pros, .cons {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .pros h4 {
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+
+        .cons h4 {
+            color: #ef4444;
+            margin-bottom: 10px;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pros li::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .cons li::before {
+            content: "✗ ";
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .career-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .career-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .career-title {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .languages-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .language-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .framework-section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .framework-section h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 16px;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">🚀 DevGuide</div>
+            <ul class="nav-links">
+                <li><a onclick="scrollToSection('languages')">Langages</a></li>
+                <li><a onclick="scrollToSection('careers')">Métiers</a></li>
+                <li><a onclick="scrollToSection('frameworks')">Frameworks</a></li>
+                <li><a onclick="scrollToSection('concepts')">Concepts</a></li>
+                <li><a onclick="scrollToSection('tools')">Outils</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Bienvenue dans le monde de la programmation 💻</h1>
+        <p>Découvrez les langages, frameworks et métiers qui façonnent notre avenir numérique</p>
+    </section>
+
+    <div class="container">
+        <div class="section" id="languages">
+            <h2 class="section-title">🎯 Langages de Programmation</h2>
+            <input type="text" class="search-bar" id="searchBar" placeholder="🔍 Rechercher un langage...">
+            
+            <div class="cards-grid" id="languagesGrid">
+                <!-- Les cartes seront générées par JavaScript -->
+            </div>
+        </div>
+
+        <div class="section" id="careers">
+            <h2 class="section-title">💼 Métiers & Domaines</h2>
+            <div id="careersContainer">
+                <!-- Les carrières seront générées par JavaScript -->
+            </div>
+        </div>
+
+        <div class="section" id="frameworks">
+            <h2 class="section-title">🛠️ Frameworks Populaires</h2>
+            <div class="cards-grid" id="frameworksGrid">
+                <!-- Les frameworks seront générés par JavaScript -->
+            </div>
+        </div>
+
+        <div class="section" id="concepts">
+            <h2 class="section-title">📚 Concepts & Technologies Clés</h2>
+            <div class="cards-grid" id="conceptsGrid">
+                <!-- Les concepts seront générés par JavaScript -->
+            </div>
+        </div>
+
+        <div class="section" id="tools">
+            <h2 class="section-title">🔧 Outils & Pratiques</h2>
+            <div class="cards-grid" id="toolsGrid">
+                <!-- Les outils seront générés par JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 DevGuide - Votre guide complet dans l'univers de la programmation</p>
+        <p>Fait avec ❤️ pour les développeurs passionnés</p>
+    </footer>
+
+    <script>
+        const languages = [
+            {
+                name: "Python",
+                icon: "🐍",
+                description: "Langage polyvalent et facile à apprendre, idéal pour les débutants",
+                pros: ["Syntaxe claire et lisible", "Grande communauté", "Nombreuses bibliothèques", "Polyvalent"],
+                cons: ["Performance limitée", "Consommation mémoire élevée", "Faible pour le mobile"],
+                useCases: "Data Science, IA, Web, Automation"
+            },
+            {
+                name: "JavaScript",
+                icon: "🌐",
+                description: "Le langage incontournable du développement web",
+                pros: ["Exécution côté client", "Écosystème riche", "Full-stack possible", "Très demandé"],
+                cons: ["Typage faible", "Comportements étranges", "Fragmentation des outils"],
+                useCases: "Web Frontend, Backend (Node.js), Applications mobiles"
+            },
+            {
+                name: "Java",
+                icon: "☕",
+                description: "Langage robuste orienté objet pour applications d'entreprise",
+                pros: ["Portabilité (JVM)", "Performance solide", "Typage fort", "Stabilité"],
+                cons: ["Verbeux", "Courbe d'apprentissage", "Startup lent"],
+                useCases: "Applications entreprise, Android, Systèmes distribués"
+            },
+            {
+                name: "C++",
+                icon: "⚡",
+                description: "Langage haute performance pour systèmes critiques",
+                pros: ["Performance maximale", "Contrôle bas niveau", "Polyvalent"],
+                cons: ["Complexité élevée", "Gestion mémoire manuelle", "Courbe d'apprentissage"],
+                useCases: "Jeux vidéo, Systèmes embarqués, Logiciels performants"
+            },
+            {
+                name: "C#",
+                icon: "🎮",
+                description: "Langage Microsoft moderne et puissant",
+                pros: ["Syntaxe élégante", "Excellent tooling", "Performance", "Unity pour les jeux"],
+                cons: ["Écosystème Microsoft", "Moins populaire sur Linux"],
+                useCases: "Applications Windows, Jeux (Unity), Applications entreprise"
+            },
+            {
+                name: "PHP",
+                icon: "🐘",
+                description: "Langage serveur dominant pour le web",
+                pros: ["Facile à déployer", "Excellent pour CMS", "Large communauté", "Mature"],
+                cons: ["Réputation mitigée", "Code legacy courant", "Sécurité à surveiller"],
+                useCases: "Sites web, WordPress, Systèmes CMS"
+            },
+            {
+                name: "Swift",
+                icon: "🍎",
+                description: "Langage moderne d'Apple pour iOS et macOS",
+                pros: ["Performance", "Syntaxe moderne", "Sécurité", "Optionals"],
+                cons: ["Limité à l'écosystème Apple", "Évolution rapide"],
+                useCases: "Applications iOS, macOS, watchOS"
+            },
+            {
+                name: "Rust",
+                icon: "🦀",
+                description: "Langage système moderne axé sur la sécurité",
+                pros: ["Sécurité mémoire", "Performance C++", "Pas de garbage collector", "Moderne"],
+                cons: ["Courbe d'apprentissage raide", "Compilation lente", "Communauté plus petite"],
+                useCases: "Systèmes, CLI, WebAssembly, Blockchain"
+            },
+            {
+                name: "Go",
+                icon: "🐹",
+                description: "Langage Google simple et efficace pour services",
+                pros: ["Simplicité", "Concurrence native", "Compilation rapide", "Performance"],
+                cons: ["Gestion d'erreur basique", "Pas de générics (avant)", "Peu de features"],
+                useCases: "Services web, Cloud, DevOps, Microservices"
+            },
+            {
+                name: "TypeScript",
+                icon: "📘",
+                description: "JavaScript avec typage statique",
+                pros: ["Typage fort", "Meilleure maintenabilité", "Excellent tooling", "Compatible JS"],
+                cons: ["Overhead de configuration", "Courbe d'apprentissage"],
+                useCases: "Applications web complexes, Frontend moderne"
+            },
+            {
+                name: "Ruby",
+                icon: "💎",
+                description: "Langage élégant axé sur la productivité",
+                pros: ["Syntaxe élégante", "Rails framework", "Productivité élevée", "Communauté"],
+                cons: ["Performance limitée", "Moins populaire", "Pas pour mobile"],
+                useCases: "Web (Rails), Scripting, Prototypage rapide"
+            },
+            {
+                name: "Kotlin",
+                icon: "🎯",
+                description: "Alternative moderne à Java pour Android",
+                pros: ["Interopérable Java", "Syntaxe concise", "Null safety", "Moderne"],
+                cons: ["Compilation plus lente", "Petite communauté vs Java"],
+                useCases: "Android, Backend, Applications multiplateforme"
+            }
+        ];
+
+        const careers = [
+            {
+                title: "🎨 Développeur Frontend",
+                description: "Crée l'interface utilisateur et l'expérience visuelle des applications web",
+                languages: ["HTML", "CSS", "JavaScript", "TypeScript"],
+                frameworks: ["React", "Vue.js", "Angular", "Svelte"],
+                skills: "Design UI/UX, Responsive, Animations, Accessibilité"
+            },
+            {
+                title: "⚙️ Développeur Backend",
+                description: "Développe la logique serveur, APIs et bases de données",
+                languages: ["Python", "Node.js", "Java", "Go", "PHP"],
+                frameworks: ["Django", "Express", "Spring Boot", "Laravel"],
+                skills: "APIs REST, Bases de données, Sécurité, Architecture"
+            },
+            {
+                title: "🚀 Développeur Full-Stack",
+                description: "Maîtrise le frontend et backend pour des applications complètes",
+                languages: ["JavaScript", "TypeScript", "Python"],
+                frameworks: ["React + Node.js", "Next.js", "Vue + Django"],
+                skills: "Frontend + Backend, DevOps basique, Gestion projet"
+            },
+            {
+                title: "📱 Développeur Mobile",
+                description: "Crée des applications pour smartphones et tablettes",
+                languages: ["Swift", "Kotlin", "Dart", "React Native"],
+                frameworks: ["Flutter", "React Native", "SwiftUI", "Jetpack Compose"],
+                skills: "UI mobile, APIs natives, Publication apps, Performance"
+            },
+            {
+                title: "🤖 Data Scientist / IA",
+                description: "Analyse données et développe des modèles d'intelligence artificielle",
+                languages: ["Python", "R", "Julia"],
+                frameworks: ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas"],
+                skills: "Machine Learning, Statistiques, Visualisation, Big Data"
+            },
+            {
+                title: "🎮 Développeur Jeux Vidéo",
+                description: "Conçoit et programme des jeux vidéo immersifs",
+                languages: ["C++", "C#", "JavaScript"],
+                frameworks: ["Unity", "Unreal Engine", "Godot"],
+                skills: "3D, Physique, IA jeux, Optimisation performance"
+            },
+            {
+                title: "☁️ DevOps / Cloud Engineer",
+                description: "Automatise le déploiement et gère l'infrastructure cloud",
+                languages: ["Python", "Go", "Bash"],
+                frameworks: ["Docker", "Kubernetes", "Terraform", "Ansible"],
+                skills: "CI/CD, Cloud (AWS/Azure/GCP), Conteneurisation, Monitoring"
+            },
+            {
+                title: "🔒 Ingénieur Cybersécurité",
+                description: "Protège les systèmes et données contre les cyberattaques",
+                languages: ["Python", "C", "Assembly"],
+                frameworks: ["Metasploit", "Burp Suite", "Wireshark"],
+                skills: "Pentesting, Cryptographie, Réseaux, Analyse vulnérabilités"
+            },
+            {
+                title: "🏗️ Architecte Logiciel",
+                description: "Conçoit l'architecture technique des systèmes complexes",
+                languages: ["Java", "C#", "Python", "Go"],
+                frameworks: ["Microservices", "Event-Driven", "Clean Architecture"],
+                skills: "Design patterns, Scalabilité, Performance, Leadership"
+            },
+            {
+                title: "🌐 Développeur Blockchain",
+                description: "Développe des applications décentralisées et smart contracts",
+                languages: ["Solidity", "Rust", "JavaScript"],
+                frameworks: ["Ethereum", "Web3.js", "Hardhat"],
+                skills: "Smart contracts, DApps, Cryptographie, Web3"
+            }
+        ];
+
+        const frameworks = [
+            {
+                name: "React",
+                icon: "⚛️",
+                type: "Frontend",
+                language: "JavaScript",
+                description: "Bibliothèque UI populaire développée par Facebook"
+            },
+            {
+                name: "Django",
+                icon: "🎸",
+                type: "Backend",
+                language: "Python",
+                description: "Framework web complet avec batteries incluses"
+            },
+            {
+                name: "Vue.js",
+                icon: "💚",
+                type: "Frontend",
+                language: "JavaScript",
+                description: "Framework progressif facile à apprendre"
+            },
+            {
+                name: "Spring Boot",
+                icon: "🍃",
+                type: "Backend",
+                language: "Java",
+                description: "Framework entreprise robuste et complet"
+            },
+            {
+                name: "Angular",
+                icon: "🅰️",
+                type: "Frontend",
+                language: "TypeScript",
+                description: "Framework complet développé par Google"
+            },
+            {
+                name: "Express.js",
+                icon: "🚂",
+                type: "Backend",
+                language: "Node.js",
+                description: "Framework minimaliste pour Node.js"
+            },
+            {
+                name: "Flutter",
+                icon: "🦋",
+                type: "Mobile",
+                language: "Dart",
+                description: "Framework UI pour applications multiplateformes"
+            },
+            {
+                name: "Laravel",
+                icon: "🔺",
+                type: "Backend",
+                language: "PHP",
+                description: "Framework PHP élégant et expressif"
+            }
+        ];
+
+        const concepts = [
+            {
+                name: "Intelligence Artificielle (IA)",
+                icon: "🤖",
+                category: "Technologies Avancées",
+                definition: "L'IA est la simulation de l'intelligence humaine par des machines qui peuvent apprendre, raisonner et résoudre des problèmes.",
+                details: [
+                    "Machine Learning: Algorithmes qui apprennent des données",
+                    "Deep Learning: Réseaux de neurones profonds",
+                    "NLP: Traitement du langage naturel",
+                    "Computer Vision: Reconnaissance d'images"
+                ],
+                applications: "Assistants vocaux, Reconnaissance faciale, Voitures autonomes, Recommandations personnalisées"
+            },
+            {
+                name: "Blockchain",
+                icon: "⛓️",
+                category: "Technologies Avancées",
+                definition: "Technologie de stockage et transmission d'informations décentralisée, transparente et sécurisée fonctionnant sans organe central de contrôle.",
+                details: [
+                    "Décentralisation: Pas d'autorité centrale",
+                    "Immutabilité: Données non modifiables",
+                    "Transparence: Toutes transactions visibles",
+                    "Smart Contracts: Contrats auto-exécutables"
+                ],
+                applications: "Cryptomonnaies (Bitcoin, Ethereum), NFTs, Supply chain, Votes électroniques"
+            },
+            {
+                name: "Cloud Computing",
+                icon: "☁️",
+                category: "Infrastructure",
+                definition: "Fourniture de services informatiques (serveurs, stockage, bases de données, réseaux) via Internet avec paiement à l'usage.",
+                details: [
+                    "IaaS: Infrastructure as a Service (AWS EC2)",
+                    "PaaS: Platform as a Service (Heroku)",
+                    "SaaS: Software as a Service (Gmail, Office 365)",
+                    "Scalabilité automatique et haute disponibilité"
+                ],
+                applications: "Hébergement web, Stockage de données, Calcul haute performance, Applications d'entreprise"
+            },
+            {
+                name: "API (Interface de Programmation)",
+                icon: "🔌",
+                category: "Architecture",
+                definition: "Interface permettant à différents logiciels de communiquer entre eux selon des règles et protocoles définis.",
+                details: [
+                    "REST API: Architecture basée sur HTTP",
+                    "GraphQL: Langage de requête flexible",
+                    "WebSocket: Communication bidirectionnelle temps réel",
+                    "SOAP: Protocole standardisé XML"
+                ],
+                applications: "Intégration services tiers, Applications mobiles, Microservices, Automatisation"
+            },
+            {
+                name: "Base de Données",
+                icon: "🗄️",
+                category: "Stockage",
+                definition: "Système organisé de collecte, stockage et gestion de données structurées ou non structurées accessible électroniquement.",
+                details: [
+                    "SQL: Bases relationnelles (PostgreSQL, MySQL)",
+                    "NoSQL: Bases non-relationnelles (MongoDB, Redis)",
+                    "NewSQL: Mix des deux approches",
+                    "Time-series: Données temporelles (InfluxDB)"
+                ],
+                applications: "Sites web, Applications mobiles, Analyses big data, Systèmes bancaires"
+            },
+            {
+                name: "Cybersécurité",
+                icon: "🔒",
+                category: "Sécurité",
+                definition: "Ensemble de pratiques, technologies et processus destinés à protéger les systèmes, réseaux et données contre les attaques numériques.",
+                details: [
+                    "Cryptographie: Chiffrement des données",
+                    "Authentification: Vérification d'identité (2FA, OAuth)",
+                    "Firewall: Protection réseau",
+                    "Pentesting: Tests de pénétration"
+                ],
+                applications: "Protection données personnelles, Sécurisation transactions, Prévention piratage, Conformité RGPD"
+            },
+            {
+                name: "DevOps",
+                icon: "♾️",
+                category: "Méthodologie",
+                definition: "Culture et ensemble de pratiques combinant développement logiciel (Dev) et opérations IT (Ops) pour réduire le cycle de développement.",
+                details: [
+                    "CI/CD: Intégration et déploiement continus",
+                    "Containerisation: Docker, Kubernetes",
+                    "Infrastructure as Code: Terraform, Ansible",
+                    "Monitoring: Suivi performance et erreurs"
+                ],
+                applications: "Déploiement automatisé, Gestion infrastructure cloud, Scaling automatique, Monitoring applications"
+            },
+            {
+                name: "Machine Learning",
+                icon: "🧠",
+                category: "Intelligence Artificielle",
+                definition: "Sous-domaine de l'IA permettant aux machines d'apprendre et de s'améliorer automatiquement à partir d'expérience sans être explicitement programmées.",
+                details: [
+                    "Apprentissage supervisé: Avec données étiquetées",
+                    "Apprentissage non supervisé: Sans étiquettes",
+                    "Apprentissage par renforcement: Par essai-erreur",
+                    "Réseaux de neurones: Modèles inspirés du cerveau"
+                ],
+                applications: "Reconnaissance vocale, Prédiction de prix, Détection de fraudes, Recommandations"
+            },
+            {
+                name: "IoT (Internet des Objets)",
+                icon: "📡",
+                category: "Technologies Avancées",
+                definition: "Réseau d'objets physiques équipés de capteurs, logiciels et technologies pour connecter et échanger des données via Internet.",
+                details: [
+                    "Capteurs et actionneurs connectés",
+                    "Communication M2M (Machine to Machine)",
+                    "Edge Computing: Traitement local des données",
+                    "Protocoles: MQTT, CoAP, LoRaWAN"
+                ],
+                applications: "Maison intelligente, Santé connectée, Agriculture de précision, Villes intelligentes"
+            },
+            {
+                name: "Microservices",
+                icon: "🧩",
+                category: "Architecture",
+                definition: "Architecture logicielle décomposant une application en ensemble de petits services indépendants communiquant via APIs.",
+                details: [
+                    "Services indépendants et déployables",
+                    "Chaque service = fonction métier spécifique",
+                    "Communication via API REST ou messages",
+                    "Scalabilité et maintenance facilitées"
+                ],
+                applications: "Applications web complexes, Plateformes e-commerce, Services streaming, Applications enterprise"
+            },
+            {
+                name: "Big Data",
+                icon: "📊",
+                category: "Données",
+                definition: "Ensembles de données tellement volumineux et complexes qu'ils nécessitent des outils spécialisés pour leur traitement et analyse.",
+                details: [
+                    "Volume: Quantités massives de données",
+                    "Vélocité: Données générées rapidement",
+                    "Variété: Formats multiples (structurés/non-structurés)",
+                    "Outils: Hadoop, Spark, Kafka"
+                ],
+                applications: "Analyses prédictives, Business Intelligence, Personnalisation marketing, Recherche scientifique"
+            },
+            {
+                name: "Réalité Virtuelle/Augmentée",
+                icon: "🥽",
+                category: "Technologies Immersives",
+                definition: "VR crée un environnement virtuel immersif. AR superpose éléments virtuels au monde réel.",
+                details: [
+                    "VR: Immersion totale (casques Oculus, HTC Vive)",
+                    "AR: Superposition réel/virtuel (Pokemon Go, filtres Snapchat)",
+                    "MR: Mixed Reality, fusion VR et AR",
+                    "Technologies: Unity, Unreal Engine, ARKit, ARCore"
+                ],
+                applications: "Jeux vidéo, Formation professionnelle, Architecture, Médecine, Retail"
+            }
+        ];
+
+        const tools = [
+            {
+                name: "Git & GitHub",
+                icon: "🌿",
+                category: "Versioning",
+                definition: "Git est un système de contrôle de version décentralisé. GitHub est une plateforme d'hébergement de code utilisant Git.",
+                keyFeatures: [
+                    "Suivi des modifications du code",
+                    "Collaboration en équipe",
+                    "Branches pour fonctionnalités parallèles",
+                    "Pull Requests pour revue de code"
+                ],
+                whyImportant: "Essentiel pour tout développeur. Permet de travailler en équipe, sauvegarder son code et revenir en arrière en cas d'erreur."
+            },
+            {
+                name: "Docker",
+                icon: "🐳",
+                category: "Containerisation",
+                definition: "Plateforme permettant d'empaqueter des applications avec leurs dépendances dans des conteneurs légers et portables.",
+                keyFeatures: [
+                    "Isolation des applications",
+                    "Portabilité entre environnements",
+                    "Déploiement rapide et cohérent",
+                    "Utilisation optimale des ressources"
+                ],
+                whyImportant: "Résout le problème 'ça marche sur ma machine'. Facilite le déploiement et la scalabilité des applications."
+            },
+            {
+                name: "VS Code",
+                icon: "💻",
+                category: "Éditeur",
+                definition: "Éditeur de code source gratuit et open-source développé par Microsoft, hautement personnalisable.",
+                keyFeatures: [
+                    "Extensions pour tous langages",
+                    "Débogage intégré",
+                    "Git intégré",
+                    "IntelliSense (autocomplétion intelligente)"
+                ],
+                whyImportant: "L'éditeur le plus populaire chez les développeurs. Léger, puissant et gratuit."
+            },
+            {
+                name: "Agile & Scrum",
+                icon: "🏃",
+                category: "Méthodologie",
+                definition: "Méthodologies de gestion de projet privilégiant l'adaptabilité, la collaboration et la livraison itérative.",
+                keyFeatures: [
+                    "Sprints: Cycles courts de développement (2-4 semaines)",
+                    "Daily Standup: Réunions quotidiennes courtes",
+                    "Backlog: Liste priorisée de fonctionnalités",
+                    "Rétrospectives: Amélioration continue"
+                ],
+                whyImportant: "Approche standard dans l'industrie. Permet de s'adapter rapidement aux changements et livrer de la valeur régulièrement."
+            },
+            {
+                name: "Testing (Tests)",
+                icon: "🧪",
+                category: "Qualité",
+                definition: "Ensemble de pratiques pour vérifier que le code fonctionne correctement et prévenir les bugs.",
+                keyFeatures: [
+                    "Tests Unitaires: Tester fonctions individuelles",
+                    "Tests d'Intégration: Tester composants ensemble",
+                    "Tests E2E: Tester flux utilisateur complet",
+                    "TDD: Test-Driven Development"
+                ],
+                whyImportant: "Code sans tests = catastrophe en attente. Les tests garantissent la fiabilité et facilitent les modifications."
+            },
+            {
+                name: "CI/CD",
+                icon: "🔄",
+                category: "Automatisation",
+                definition: "Intégration Continue et Déploiement Continu. Pratiques automatisant la construction, test et déploiement du code.",
+                keyFeatures: [
+                    "Build automatique à chaque commit",
+                    "Tests automatiques",
+                    "Déploiement automatisé en production",
+                    "Outils: Jenkins, GitLab CI, GitHub Actions"
+                ],
+                whyImportant: "Accélère le cycle de développement et réduit les erreurs humaines. Déploiements plus fréquents et fiables."
+            },
+            {
+                name: "REST API",
+                icon: "🌐",
+                category: "Architecture",
+                definition: "Style d'architecture pour créer des services web utilisant HTTP et ses méthodes (GET, POST, PUT, DELETE).",
+                keyFeatures: [
+                    "Sans état (stateless)",
+                    "Utilise les méthodes HTTP standard",
+                    "Ressources identifiées par URLs",
+                    "Format JSON pour les données"
+                ],
+                whyImportant: "Standard de facto pour la communication entre applications. Permet de séparer frontend et backend."
+            },
+            {
+                name: "Responsive Design",
+                icon: "📱",
+                category: "Frontend",
+                definition: "Approche de conception web rendant les pages utilisables sur tous appareils (desktop, tablette, mobile).",
+                keyFeatures: [
+                    "Media Queries CSS",
+                    "Grilles flexibles (Flexbox, Grid)",
+                    "Images adaptatives",
+                    "Mobile-first design"
+                ],
+                whyImportant: "Plus de 60% du trafic web vient du mobile. Un site non-responsive perd des utilisateurs et du référencement."
+            },
+            {
+                name: "SQL",
+                icon: "🗃️",
+                category: "Données",
+                definition: "Langage standardisé pour gérer et interroger des bases de données relationnelles.",
+                keyFeatures: [
+                    "SELECT: Interroger les données",
+                    "INSERT, UPDATE, DELETE: Modifier les données",
+                    "JOIN: Combiner des tables",
+                    "Indexes: Optimiser les requêtes"
+                ],
+                whyImportant: "Compétence fondamentale. Presque toutes les applications stockent des données dans une base de données."
+            },
+            {
+                name: "Clean Code",
+                icon: "✨",
+                category: "Bonnes Pratiques",
+                definition: "Ensemble de principes pour écrire du code lisible, maintenable et de qualité.",
+                keyFeatures: [
+                    "Noms de variables explicites",
+                    "Fonctions courtes et focalisées",
+                    "DRY: Don't Repeat Yourself",
+                    "SOLID: Principes de conception objet"
+                ],
+                whyImportant: "Le code est lu 10x plus qu'il n'est écrit. Un code propre économise des heures de debugging et facilite la collaboration."
+            },
+            {
+                name: "Sécurité Web",
+                icon: "🛡️",
+                category: "Sécurité",
+                definition: "Pratiques pour protéger les applications web contre les vulnérabilités et attaques courantes.",
+                keyFeatures: [
+                    "XSS: Protection contre scripts malicieux",
+                    "CSRF: Prévention requêtes forgées",
+                    "SQL Injection: Validation des entrées",
+                    "HTTPS: Chiffrement des communications"
+                ],
+                whyImportant: "Une faille de sécurité peut détruire la réputation d'une entreprise et coûter des millions. La sécurité doit être intégrée dès le début."
+            },
+            {
+                name: "Performance Web",
+                icon: "⚡",
+                category: "Optimisation",
+                definition: "Techniques pour améliorer la vitesse de chargement et la réactivité des applications web.",
+                keyFeatures: [
+                    "Lazy Loading: Chargement différé",
+                    "Minification: Réduction taille fichiers",
+                    "CDN: Distribution géographique",
+                    "Caching: Mise en cache stratégique"
+                ],
+                whyImportant: "1 seconde de délai = 7% de conversions en moins. La performance impacte directement l'expérience utilisateur et le SEO."
+            }
+        ];
+
+        // Fonctions de rendu
+        function renderLanguages() {
+            const grid = document.getElementById('languagesGrid');
+            grid.innerHTML = languages.map(lang => `
+                <div class="card" onclick="showLanguageDetails('${lang.name}')">
+                    <div class="card-header">
+                        <div class="card-icon">${lang.icon}</div>
+                        <h3>${lang.name}</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>${lang.description}</p>
+                        <p style="margin-top: 10px; color: #667eea; font-weight: 600;">
+                            ${lang.useCases}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderCareers() {
+            const container = document.getElementById('careersContainer');
+            container.innerHTML = careers.map(career => `
+                <div class="career-card" onclick="showCareerDetails('${career.title}')">
+                    <h3 class="career-title">${career.title}</h3>
+                    <p>${career.description}</p>
+                    <div class="languages-list">
+                        ${career.languages.map(lang => `<span class="language-tag">${lang}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderFrameworks() {
+            const grid = document.getElementById('frameworksGrid');
+            grid.innerHTML = frameworks.map(fw => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">${fw.icon}</div>
+                        <h3>${fw.name}</h3>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Type:</strong> ${fw.type}</p>
+                        <p><strong>Langage:</strong> ${fw.language}</p>
+                        <p style="margin-top: 10px;">${fw.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderConcepts() {
+            const grid = document.getElementById('conceptsGrid');
+            grid.innerHTML = concepts.map(concept => `
+                <div class="card" onclick="showConceptDetails('${concept.name}')">
+                    <div class="card-header">
+                        <div class="card-icon">${concept.icon}</div>
+                        <h3>${concept.name}</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: #764ba2; font-weight: 600; margin-bottom: 10px;">
+                            ${concept.category}
+                        </p>
+                        <p>${concept.definition.substring(0, 150)}...</p>
+                        <div class="languages-list" style="margin-top: 15px;">
+                            ${concept.details.slice(0, 2).map(detail => 
+                                `<span class="language-tag" style="background: rgba(102, 126, 234, 0.1); color: #667eea; font-size: 12px;">${detail}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = tools.map(tool => `
+                <div class="card" onclick="showToolDetails('${tool.name}')">
+                    <div class="card-header">
+                        <div class="card-icon">${tool.icon}</div>
+                        <h3>${tool.name}</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: #10b981; font-weight: 600; margin-bottom: 10px;">
+                            ${tool.category}
+                        </p>
+                        <p>${tool.definition.substring(0, 120)}...</p>
+                        <div style="margin-top: 15px; font-size: 14px; color: #666;">
+                            <strong>Fonctionnalités :</strong> ${tool.keyFeatures.slice(0, 2).join(', ')}...
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fonctions pour afficher les détails
+        function showLanguageDetails(name) {
+            const lang = languages.find(l => l.name === name);
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h2>${lang.icon} ${lang.name}</h2>
+                <p style="font-size: 18px; margin: 20px 0;">${lang.description}</p>
+                <p style="color: #667eea; font-weight: 600; margin-bottom: 20px;">
+                    <strong>Domaines d'utilisation:</strong> ${lang.useCases}
+                </p>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✓ Avantages</h4>
+                        <ul>
+                            ${lang.pros.map(pro => `<li>${pro}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>✗ Inconvénients</h4>
+                        <ul>
+                            ${lang.cons.map(con => `<li>${con}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function showCareerDetails(title) {
+            const career = careers.find(c => c.title === title);
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h2>${career.title}</h2>
+                <p style="font-size: 18px; margin: 20px 0;">${career.description}</p>
+                
+                <div class="framework-section">
+                    <h4>Langages nécessaires</h4>
+                    <div class="languages-list">
+                        ${career.languages.map(lang => `<span class="language-tag" style="background: #667eea; color: white;">${lang}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="framework-section">
+                    <h4>Frameworks & Outils principaux</h4>
+                    <div class="languages-list">
+                        ${career.frameworks.map(fw => `<span class="language-tag" style="background: #764ba2; color: white;">${fw}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="framework-section">
+                    <h4>Compétences clés</h4>
+                    <p>${career.skills}</p>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function showConceptDetails(name) {
+            const concept = concepts.find(c => c.name === name);
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h2>${concept.icon} ${concept.name}</h2>
+                <p style="color: #764ba2; font-weight: 600; font-size: 18px; margin-bottom: 10px;">
+                    ${concept.category}
+                </p>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">📖 Définition</h3>
+                    <p style="font-size: 16px; line-height: 1.6;">${concept.definition}</p>
+                </div>
+                
+                <div class="framework-section">
+                    <h4>🔹 Points Clés</h4>
+                    <ul style="list-style: none; padding-left: 0; margin: 15px 0;">
+                        ${concept.details.map(detail => `
+                            <li style="padding: 8px 0; border-bottom: 1px solid #eee; display: flex; align-items: start;">
+                                <span style="color: #667eea; margin-right: 10px;">•</span>
+                                ${detail}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div class="framework-section">
+                    <h4>💼 Applications Concrètes</h4>
+                    <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); 
+                              padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <p style="font-size: 16px; color: #333;">${concept.applications}</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function showToolDetails(name) {
+            const tool = tools.find(t => t.name === name);
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <h2>${tool.icon} ${tool.name}</h2>
+                <p style="color: #10b981; font-weight: 600; font-size: 18px; margin-bottom: 10px;">
+                    ${tool.category}
+                </p>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">📖 Définition</h3>
+                    <p style="font-size: 16px; line-height: 1.6;">${tool.definition}</p>
+                </div>
+                
+                <div class="framework-section">
+                    <h4>✨ Fonctionnalités Principales</h4>
+                    <ul style="list-style: none; padding-left: 0; margin: 15px 0;">
+                        ${tool.keyFeatures.map(feature => `
+                            <li style="padding: 8px 0; border-bottom: 1px solid #eee; display: flex; align-items: start;">
+                                <span style="color: #10b981; margin-right: 10px;">✓</span>
+                                ${feature}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div class="framework-section">
+                    <h4>💡 Pourquoi c'est Important</h4>
+                    <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+                              padding: 20px; border-radius: 10px; margin-top: 10px;">
+                        <p style="font-size: 16px; color: #333; font-style: italic;">"${tool.whyImportant}"</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        // Fonctions utilitaires
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLanguages();
+            renderCareers();
+            renderFrameworks();
+            renderConcepts();
+            renderTools();
+            
+            // Recherche
+            document.getElementById('searchBar').addEventListener('input', (e) => {
+                const search = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('#languagesGrid .card');
+                
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    card.style.display = text.includes(search) ? 'block' : 'none';
+                });
+            });
+            
+            // Fermer modal en cliquant à l'extérieur
+            document.getElementById('modal').addEventListener('click', (e) => {
+                if (e.target.id === 'modal') closeModal();
+            });
+        });
+    </script>
+</body>
+</html>
